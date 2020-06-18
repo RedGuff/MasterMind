@@ -42,24 +42,25 @@ void displayTitle() {
     }
 void displayGame(int nTry, int maxiTry, string solution, string tryPlayer) {
     cout << nTry << "/" << maxiTry << "\t" << tryPlayer << "\t  " ;
-    int bof = 0;
+    int badPlace = 0;
     int good = 0;
     for(int a = 0; a < solution.size(); a++) {
         if(tryPlayer[a] == solution[a]) {
             good++;
             }
-        for(int b = 0; b < solution.size(); b++) {
-            if(a == b) {
-                break;
-                }
+        for(int b = 0; b < solution.size()+0; b++) { // +1 ?
+
             if(tryPlayer[a] == solution[b]) {
-                bof++;
+                badPlace++;
+            if(a == b) {
+                badPlace--;
+                }
                 }
             }
         }
     cout << good;
     cout << "\t ";
-    cout << bof;
+    cout << badPlace;
     cout    << endl;
     }
 
@@ -70,14 +71,31 @@ void coutLose() { // Smiley ?
     cout << "You lose!" << endl;
     cout << solution << endl;
     }
-
+string repeatStringInt ( string pattern = "", int n = 0 ) // As the name says: string first, int after. // https://github.com/RedGuff/repeatStringInt
+{
+    if ( n < 0 )
+        {
+        cerr << "Error: repeat(" << pattern << ", " << n << " < 0)" << endl;
+        return "-1";
+        }
+    else if ( n == 0 )
+        {
+        return "";
+        }
+    else
+        {
+        return pattern + repeatStringInt ( pattern, n - 1 );
+        }
+}
 int main() {
     srand(time(NULL));       // No need for better init.
     init();
     displayTitle();
     //tryPlayer = "ABCDE";
+     displayGame(nTry, maxiTry, solution, repeatStringInt ( "?", NtoGuess ));
     bool finished = false;
     while(finished == false) {
+
         nTry++;
       getline(cin,tryPlayer);
         if (tryPlayer==solution)
