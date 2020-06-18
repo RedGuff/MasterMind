@@ -31,7 +31,6 @@ void init() { // Ask ? // https://fr.wikipedia.org/wiki/Mastermind
     assert((Ncolors > 0) && "Nombre de couleurs < 0");
     bool sameAllowed = true;
     maxiTry = 12;
-    // solution  = "ABCDEF";
     for(int a = 0; a < NtoGuess; a++) {
         solution = solution + nbToChar(rand() % Ncolors);
         }
@@ -59,14 +58,13 @@ void displayGame(int nTry, int maxiTry, string solution, string tryPlayer) {
             }
         }
     cout << good;
-    cout << "      ";
+    cout << "\t ";
     cout << bof;
     cout    << endl;
     }
 
 void coutWin() { // Smiley ?
     cout << "You win!" << endl;
-    cout << solution << endl;
     }
 void coutLose() { // Smiley ?
     cout << "You lose!" << endl;
@@ -77,15 +75,21 @@ int main() {
     srand(time(NULL));       // No need for better init.
     init();
     displayTitle();
-    tryPlayer = "AXCZD";
+    //tryPlayer = "ABCDE";
     bool finished = false;
     while(finished == false) {
-        displayGame(nTry, maxiTry, solution, tryPlayer);
         nTry++;
+      getline(cin,tryPlayer);
+        if (tryPlayer==solution)
+        {coutWin();
+            finished = true;
+        }else{
+        displayGame(nTry, maxiTry, solution, tryPlayer);
         if(nTry >= maxiTry) {
+            coutLose();
             finished = true;
             }
+            }
         }
-    cout << "Ok." << endl;
     return 0;
     }
